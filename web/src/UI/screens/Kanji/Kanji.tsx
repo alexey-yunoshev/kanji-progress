@@ -13,9 +13,9 @@ function KanjiTile({
                        isActive
                    }: KanjiTileProps) {
 
-    let className = 'kanji-tile';
+    let className = 'k';
     if (isActive) {
-        className += " kanji-tile--active"
+        className += " a"
     }
 
     return (
