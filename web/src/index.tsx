@@ -14,7 +14,7 @@ import {
 import {
     getFirestore,
     useFirestoreEmulator as emulateFirestore,
-} from "firebase/firestore/lite"
+} from "firebase/firestore"
 
 const firebaseConfig = {
     apiKey: "AIzaSyCDIuciJNPxbZdLuCFqef1Bu_03SEvywLU",

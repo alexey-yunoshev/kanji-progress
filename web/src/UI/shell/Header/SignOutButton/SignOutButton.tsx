@@ -37,7 +37,10 @@ function SignOutButton() {
                 border: "none",
                 cursor: "pointer",
             }}
-            onClick={() => signOut(getAuth())}
+            onClick={() => {
+                signOut(getAuth());
+                window.location.assign("/");
+            }}
             title="sign out"
         >
             <SignOutIcon/>

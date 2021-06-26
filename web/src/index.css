@@ -20,6 +20,21 @@ code {
     monospace;
 }
 
+.custom-scroll-bar::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+.custom-scroll-bar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.custom-scroll-bar::-webkit-scrollbar-thumb {
+  --thumb-color: #0c4a64;
+  background-color: var(--thumb-color);
+  border-radius: 5px;
+  outline: none;
+}
+
 .unscrollable {
   height: 100%;
   overflow: hidden;

@@ -1,0 +1,10 @@
+.kanji-tile {
+    color: #001d2a;
+    font-size: 1.9em;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+.kanji-tile--active {
+    background-color: #F86F9B;
+}

@@ -1,116 +1,108 @@
-import {useRef} from "react";
-import {useMediaQuery} from "react-responsive";
 import {getAuth, GoogleAuthProvider, signInWithPopup,} from "firebase/auth";
 import GoogleSignInButton from "./GoogleSignInButton";
 import ContentView from "../../components/ContentView";
+import {ensureUserIsInitialized} from "../../../services/API";
 
-export interface ProviderDatum {
-    uid: string;
-    displayName: string;
-    photoURL: string;
-    email: string;
-    phoneNumber: null;
-    providerId: string;
-}
-
-export interface StsTokenManager {
-    apiKey: string;
-    refreshToken: string;
-    accessToken: string;
-    expirationTime: number;
-}
-
-export interface MultiFactor {
-    enrolledFactors: any[];
-}
-
-
-export interface User {
-    uid: string;
-    displayName: string;
-    photoURL: string;
-    email: string;
-    emailVerified: boolean;
-    phoneNumber: null;
-    isAnonymous: boolean;
-    tenantId: null;
-    providerData: ProviderDatum[];
-    apiKey: string;
-    appName: string;
-    authDomain: string;
-    stsTokenManager: StsTokenManager;
-    redirectEventId: null;
-    lastLoginAt: string;
-    createdAt: string;
-    multiFactor: MultiFactor;
-}
-
-export interface AdditionalUserInfo {
-    providerId: string;
-    isNewUser: boolean;
-    profile: Profile;
-}
-
-export interface Profile {
-    name: string;
-    granted_scopes: string;
-    id: string;
-    verified_email: boolean;
-    given_name: string;
-    locale: string;
-    family_name: string;
-    email: string;
-    picture: string;
-}
-
-
-export interface Credential {
-    providerId: string;
-    signInMethod: string;
-    oauthIdToken: string;
-    oauthAccessToken: string;
-}
-
-export interface AuthResult {
-    user: User;
-    credential: Credential;
-    operationType: "signIn";
-    additionalUserInfo: AdditionalUserInfo;
-}
+// export interface ProviderDatum {
+//     uid: string;
+//     displayName: string;
+//     photoURL: string;
+//     email: string;
+//     phoneNumber: null;
+//     providerId: string;
+// }
+//
+// export interface StsTokenManager {
+//     apiKey: string;
+//     refreshToken: string;
+//     accessToken: string;
+//     expirationTime: number;
+// }
+//
+// export interface MultiFactor {
+//     enrolledFactors: any[];
+// }
+//
+//
+// export interface User {
+//     uid: string;
+//     displayName: string;
+//     photoURL: string;
+//     email: string;
+//     emailVerified: boolean;
+//     phoneNumber: null;
+//     isAnonymous: boolean;
+//     tenantId: null;
+//     providerData: ProviderDatum[];
+//     apiKey: string;
+//     appName: string;
+//     authDomain: string;
+//     stsTokenManager: StsTokenManager;
+//     redirectEventId: null;
+//     lastLoginAt: string;
+//     createdAt: string;
+//     multiFactor: MultiFactor;
+// }
+//
+// export interface AdditionalUserInfo {
+//     providerId: string;
+//     isNewUser: boolean;
+//     profile: Profile;
+// }
+//
+// export interface Profile {
+//     name: string;
+//     granted_scopes: string;
+//     id: string;
+//     verified_email: boolean;
+//     given_name: string;
+//     locale: string;
+//     family_name: string;
+//     email: string;
+//     picture: string;
+// }
+//
+//
+// export interface Credential {
+//     providerId: string;
+//     signInMethod: string;
+//     oauthIdToken: string;
+//     oauthAccessToken: string;
+// }
+//
+// export interface AuthResult {
+//     user: User;
+//     credential: Credential;
+//     operationType: "signIn";
+//     additionalUserInfo: AdditionalUserInfo;
+// }
 
 
 export default function LoginScreen() {
-    const loginElement = useRef<HTMLDivElement | null>(null);
-
-    const isNarrow = useMediaQuery({
-        query: '(max-width: 950px)'
-    });
 
     function signIn() {
         const auth = getAuth();
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider)
             .then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 if (!credential) {
+                    alert("Sorry, there was an error")
                     console.error('Credential is null')
                     return
                 }
-
-                const token = credential.accessToken;
-                // The signed-in user info.
-                const user = result.user;
-                console.log(user)
+                ensureUserIsInitialized()
+                    .then(() => {
+                        console.log("User initialized");
+                    }).catch(() => {
+                    alert("Sorry, there was a problem initializing the user, please sign in later.")
+                })
             }).catch((error) => {
-            // Handle Errors here.
             const errorCode = error.code;
             const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.email;
-            // The AuthCredential type that was used.
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            // ...
+            console.error(errorCode);
+            console.error(errorMessage);
+            alert("Sorry, there was a problem authenticating, please try again later.")
         });
     }
 
@@ -142,7 +134,7 @@ export default function LoginScreen() {
                             style={{
                                 display: "grid",
                                 gridTemplateAreas: "login image",
-                                gridTemplateColumns: "1fr 1fr",
+                                gridTemplateColumns: "2fr 1fr",
                                 gridTemplateRows: "100vh",
                             }}
                         >

@@ -4,6 +4,7 @@ import SignOutButton from "./SignOutButton/SignOutButton";
 import React, {useEffect, useMemo, useState} from "react";
 import {getAuth, User} from "firebase/auth";
 import {Link as RouterLink, NavLink} from "react-router-dom";
+import {useGetUser} from "../../../services/API";
 
 interface MenuItem {
     name: string,
@@ -11,7 +12,7 @@ interface MenuItem {
 }
 
 function Header() {
-    const [user, setUser] = useState<User | null>()
+    const user = useGetUser()
 
     const menuItems: Array<MenuItem> = useMemo(() => [
         {
@@ -23,11 +24,6 @@ function Header() {
             name: "Kanji",
         }
     ], [])
-
-    useEffect(() => {
-        const auth = getAuth();
-        setUser(auth.currentUser);
-    }, [])
 
     const displayName = user?.displayName;
 
@@ -86,7 +82,9 @@ function Header() {
                                     isActive={(_, location) => (
                                         location.pathname.startsWith(item.pathname)
                                     )}
-                                    to={item.pathname}>
+                                    to={item.pathname}
+                                    key={item.pathname}
+                                >
                                     {item.name}
                                 </NavLink>
                             ))
@@ -115,3 +113,4 @@ function Header() {
 }
 
 export default Header;
+
