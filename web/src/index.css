@@ -1,5 +1,8 @@
 * {
+  --background-gradient: linear-gradient(37deg, rgba(241,184,190,1) 0%, rgba(249,173,205,1) 51%, rgba(241,184,213,1) 100%);
   --primary-color: #f1b8be;
+  --primary-text-color: #0c4a64;
+  --primary-text-color--hover: #116f9f;
   box-sizing: border-box;
 }
 
@@ -15,4 +18,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.unscrollable {
+  height: 100%;
+  overflow: hidden;
 }

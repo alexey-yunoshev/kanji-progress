@@ -1,14 +1,12 @@
-import {View} from "@adobe/react-spectrum";
-
 export default function Logo() {
     return (
-        <View
-            UNSAFE_style={{
+        <div
+            style={{
                 color: "white",
                 fontSize: "2em"
             }}
         >
             Kanji Progress
-        </View>
+        </div>
     )
 }

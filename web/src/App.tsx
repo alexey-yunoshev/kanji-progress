@@ -1,12 +1,14 @@
 import React, {Suspense, useEffect, useState} from 'react';
 import './App.css';
 import {getAuth, signOut} from 'firebase/auth';
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import {defaultTheme, Provider as SpectrumProvider} from '@adobe/react-spectrum';
+import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
+import {defaultTheme, Provider as SpectrumProvider, View} from '@adobe/react-spectrum';
 import {ApiProvider} from "./services/API";
 import {ErrorBoundary} from "react-error-boundary";
 import LoadingScreen from "./UI/screens/Loading";
 import LoginScreen from "./UI/screens/Login/Login";
+import Header from "./UI/shell/Header/Header";
+import ContentView from "./UI/components/ContentView";
 
 
 const ErrorScreen = React.lazy(() => import("./UI/screens/Error"));
@@ -48,7 +50,6 @@ function App() {
     if (!isLoggedIn) {
         return (
             <Providers>
-                <SpectrumProvider theme={{...defaultTheme}}>
                     <ErrorBoundary
                         FallbackComponent={ErrorScreen}
                         onError={console.error}
@@ -61,19 +62,49 @@ function App() {
                             </Suspense>
                         </Switch>
                     </ErrorBoundary>
-                </SpectrumProvider>
             </Providers>
         )
     }
 
     return (
-        <div>
-            <button
-                onClick={() => {
-                    signOut(getAuth())
-                }}
-            >Sign out</button>
-        </div>
+        <Providers>
+                <ErrorBoundary
+                    FallbackComponent={ErrorScreen}
+                    onError={console.error}
+                >
+                    <View
+                        UNSAFE_className="unscrollable"
+                        height="100vh"
+                    >
+                        <Header/>
+                        <Switch>
+                            <Suspense fallback={<LoadingScreen/>}>
+                                <ContentView>
+                                    <Route path="/search">
+                                        <span>Search</span>
+                                    </Route>
+                                    <Route path="/kanji" exact>
+                                        <span>Kanji</span>
+                                    </Route>
+                                    <Route path="/" exact>
+                                        <Redirect
+                                            to="/search"
+                                        />
+                                    </Route>
+                                </ContentView>
+                            </Suspense>
+                        </Switch>
+                    </View>
+                </ErrorBoundary>
+        </Providers>
+
+        // <div>
+        //     <button
+        //         onClick={() => {
+        //             signOut(getAuth())
+        //         }}
+        //     >Sign out</button>
+        // </div>
     )
 
     // return (

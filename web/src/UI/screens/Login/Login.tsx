@@ -1,8 +1,8 @@
 import {useRef} from "react";
 import {useMediaQuery} from "react-responsive";
 import {getAuth, GoogleAuthProvider, signInWithPopup,} from "firebase/auth";
-import {Flex, Grid, View} from "@adobe/react-spectrum";
 import GoogleSignInButton from "./GoogleSignInButton";
+import ContentView from "../../components/ContentView";
 
 export interface ProviderDatum {
     uid: string;
@@ -116,66 +116,81 @@ export default function LoginScreen() {
 
 
     return (
-        <View
-            UNSAFE_style={{
-                background: "linear-gradient(37deg, rgba(241,184,190,1) 0%, rgba(249,173,205,1) 51%, rgba(241,184,213,1) 100%)"
-            }}
-        >
-            <Flex
-                justifyContent="center"
+        <ContentView>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                }}
             >
-                <View
-                    maxWidth="1000px"
-                    width="100%"
+                <div
+                    style={{
+                        display: "flex",
+                        maxWidth: "1000px",
+                        width: "100%",
+                    }}
                 >
-                    <View
-                        height="100vh"
-                        paddingX="size-400"
-                        width="100%"
+                    <div
+                        style={{
+                            height: "100vh",
+                            paddingLeft: "20px",
+                            paddingRight: "20px",
+                            width: "100%",
+                        }}
                     >
-                        <Grid
-                            areas={[
-                                "login", "image"
-                            ]}
-                            columns={["1fr", "1fr"]}
-                            rows={["100vh"]}
+                        <div
+                            style={{
+                                display: "grid",
+                                gridTemplateAreas: "login image",
+                                gridTemplateColumns: "1fr 1fr",
+                                gridTemplateRows: "100vh",
+                            }}
                         >
-                            <Flex
-                                alignItems="center"
-                                justifyContent="center"
+                            <div
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
                             >
-                                <View>
-                                    <View
-                                        marginBottom="size-200"
-                                        UNSAFE_style={{
+                                <div>
+                                    <div
+                                        style={{
+                                            marginBottom: "50px",
                                             color: "white",
                                             fontSize: "3em",
                                         }}
                                     >
                                         Kanji Progress
-                                    </View>
-                                    <View
-                                        marginBottom="size-450"
-                                        UNSAFE_style={{
+                                    </div>
+                                    <div
+                                        style={{
+                                            marginBottom: "50px",
                                             color: "white",
-                                            fontSize: "1.5em",
+                                            fontSize: "1.2em",
                                         }}
                                     >
-                                        Learn Kanji faster by exploring words that contain the new character. The app will show
-                                        you the words that contain only known to you characters in the order of popularity starting with the most common words. This way not only
-                                        will you learn the new character, but you will also review the previously learned
+                                        Learn Kanji faster by exploring words that contain the new character. The app
+                                        will show
+                                        you the words that contain only known to you characters in the order of
+                                        popularity starting with the most common words. This way not only
+                                        will you learn the new character, but you will also review the previously
+                                        learned
                                         ones ^_^
-                                    </View>
-                                    <View>
+                                    </div>
+                                    <div>
                                         <GoogleSignInButton
                                             onClick={() => signIn()}
                                         />
-                                    </View>
-                                </View>
-                            </Flex>
-                            <Flex
-                                alignItems="center"
-                                justifyContent="center"
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
                             >
                                 <span
                                     style={{
@@ -187,11 +202,11 @@ export default function LoginScreen() {
                                 >
                                     漢字進歩
                                 </span>
-                            </Flex>
-                        </Grid>
-                    </View>
-                </View>
-            </Flex>
-        </View>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ContentView>
     )
 }
