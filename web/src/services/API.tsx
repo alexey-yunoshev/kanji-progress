@@ -1,5 +1,5 @@
-import {runTransaction, getFirestore, doc, getDoc} from "firebase/firestore";
-import {createContext, useContext, useEffect, useState} from "react";
+import {runTransaction, getFirestore, doc, getDoc, updateDoc} from "firebase/firestore";
+import React, {createContext, useContext, useEffect, useState} from "react";
 import {getAuth, User} from "firebase/auth";
 import {Kanji} from "../types";
 
@@ -63,14 +63,17 @@ export async function getUserEntry(): Promise<UserEntry | null> {
     }
 }
 
+type OptionalUserKanji = Array<Kanji> | null;
 
-const currentUserKanji: Array<Kanji> | null = null;
+export interface UseUserKanjiResult {
+    userKanji: OptionalUserKanji,
+    setUserKanji: React.Dispatch<OptionalUserKanji>,
+}
 
-export function useUserKanji(): Array<string> | null {
-    const [userKanji, setUserKanji] = useState<Array<Kanji> | null>(null);
+export function useUserKanji(): UseUserKanjiResult {
+    const [userKanji, setUserKanji] = useState<OptionalUserKanji>(null);
 
     useEffect(() => {
-        console.log('useEffect getUserKanji');
         getUserEntry()
             .then((entry) => {
                 if (entry === null) {
@@ -82,7 +85,23 @@ export function useUserKanji(): Array<string> | null {
 
     }, []);
 
-    return userKanji
+    return {
+        userKanji,
+        setUserKanji,
+    }
+}
+
+export function updateUserKanji(kanji: Array<Kanji>) {
+    const db = getFirestore();
+    const user = getAuth().currentUser;
+
+    if (user == null) {
+        console.error("No user");
+        return null;
+    }
+
+    const docRef = doc(db, "users", user.uid);
+    return updateDoc(docRef, {kanji: kanji.join("")});
 }
 
 const defaultContext = {

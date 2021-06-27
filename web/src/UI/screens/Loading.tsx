@@ -5,7 +5,7 @@ export default function LoadingScreen() {
         <div
             style={{
                 alignItems: "center",
-                backgroundColor: "#f1b8be",
+                background: "linear-gradient(37deg, rgb(224 184 241) 0%, rgb(249 173 235) 51%, rgb(241 184 207) 100%)",
                 display: "flex",
                 justifyContent: "center",
                 minHeight: "100vh",
@@ -27,7 +27,7 @@ export default function LoadingScreen() {
                         fontWeight: "bold",
                         textShadow: "1px 1px 4px rgb(0 0 0 / 25%)",
                     }}
-                >Kanji Progress</div>
+                >...</div>
             </div>
         </div>
     )

@@ -12,6 +12,7 @@ import ContentView from "./UI/components/ContentView";
 
 const ErrorScreen = React.lazy(() => import("./UI/screens/Error"));
 const KanjiScreen = React.lazy(() => import("./UI/screens/Kanji/Kanji"));
+const SearchScreen = React.lazy(() => import("./UI/screens/Search/Search"));
 
 
 export interface ProvidersProps {
@@ -81,7 +82,7 @@ function App() {
                             <Suspense fallback={<LoadingScreen/>}>
                                 <ContentView>
                                     <Route path="/search">
-                                        <div>hello there</div>
+                                        <SearchScreen/>
                                     </Route>
                                     <Route path="/kanji" exact>
                                         <KanjiScreen/>

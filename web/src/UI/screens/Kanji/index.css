@@ -7,5 +7,5 @@
 }
 
 .a {
-    background-color: #F86F9B;
+    background-color: var(--item-background-accent-color);
 }

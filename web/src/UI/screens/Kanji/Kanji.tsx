@@ -33,7 +33,8 @@ export default function KanjiScreen() {
         useUserKanji,
     } = useApiProvider()
 
-    const userKanji = new Set(useUserKanji());
+    const {userKanji} = useUserKanji();
+    const userKanjiSet = new Set(userKanji);
 
 
     return (
@@ -53,7 +54,7 @@ export default function KanjiScreen() {
                     <KanjiTile
                         key={kanji}
                         kanji={kanji}
-                        isActive={userKanji.has(kanji)}
+                        isActive={userKanjiSet.has(kanji)}
                     />
                 ))
             }

@@ -1,0 +1,17 @@
+.lemma {
+    color: #001d2a;
+    cursor: pointer;
+    font-size: 1.8em;
+    border-radius: 5px;
+    padding: 4px;
+    transition: background-color 500ms, box-shadow 100ms;
+}
+
+.lemma-active {
+    background-color: var(--item-background-accent-color);
+}
+
+.lemma:hover {
+    box-shadow: 0px 2px 4px rgb(0 0 0 / 20%);
+    background-color: var(--item-background-accent-color--hover);
+}
