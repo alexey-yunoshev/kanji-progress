@@ -24,7 +24,7 @@ export function findLemmas(
     kanjiIndex: KanjiIndex,
     idLemmaIndex: IdLemmaIndex,
     kanji: Array<Kanji>,
-    ): Array<LemmaRankPair> {
+): Array<LemmaRankPair> {
     if (kanji.length === 0) {
         return [];
     }
