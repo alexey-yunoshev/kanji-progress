@@ -1,6 +1,6 @@
 import {updateUserKanji, useApiProvider} from "../../../services/API";
 import {Kanji, Lemma} from "../../../types";
-import {allKanji, findLemmas} from "../../../services/kanji/kanji";
+import {findLemmas, useGetAllKanji, useGetIdLemmaIndex, useGetKanjiIndex} from "../../../services/kanji/kanji";
 import "./index.css"
 import {useState} from "react";
 
@@ -29,9 +29,12 @@ function LemmaTile({
     )
 }
 
-const availableKanji = new Set(allKanji);
 
 export default function SearchScreen() {
+    const allKanji = useGetAllKanji();
+    const availableKanji = new Set(allKanji);
+    const kanjiIndex = useGetKanjiIndex()
+    const idLemmaIndex = useGetIdLemmaIndex()
 
     const {
         useUserKanji,
@@ -46,7 +49,6 @@ export default function SearchScreen() {
 
     const [kanjiInput, setKanjiInput] = useState<Array<Kanji>>([]);
 
-    const lemmaPairs = findLemmas(kanjiInput);
 
     const onKanjiInputChange = (value: string) => {
         const chars: Array<Kanji> = [];
@@ -94,6 +96,19 @@ export default function SearchScreen() {
 
         return true;
     }
+
+    if (
+        kanjiIndex === null
+        || idLemmaIndex === null
+    ) {
+        return <div>"Loading..."</div>
+    }
+
+    const lemmaPairs = findLemmas(
+        kanjiIndex,
+        idLemmaIndex,
+        kanjiInput,
+    );
 
     return (
         <div

@@ -1,7 +1,7 @@
 import {useApiProvider} from "../../../services/API";
 import {Kanji} from "../../../types";
-import {allKanji} from "../../../services/kanji/kanji";
 import "./index.css"
+import {useGetAllKanji} from "../../../services/kanji/kanji";
 
 interface KanjiTileProps {
     kanji: Kanji,
@@ -33,6 +33,7 @@ export default function KanjiScreen() {
         useUserKanji,
     } = useApiProvider()
 
+    const allKanji = useGetAllKanji();
     const {userKanji} = useUserKanji();
     const userKanjiSet = new Set(userKanji);
 

@@ -13,6 +13,6 @@ export interface LemmaKanjiPair {
 
 export type LemmaRankPair = [Lemma, Rank]
 export type KanjiIndex = Map<Kanji, Array<ID>>
-export type LemmaIdIndex = Map<ID, LemmaRankPair>
+export type IdLemmaIndex = Map<ID, LemmaRankPair>
 
 export type ViewProps = _ViewProps & React.RefAttributes<import("@react-types/shared").DOMRefValue<HTMLElement>>;

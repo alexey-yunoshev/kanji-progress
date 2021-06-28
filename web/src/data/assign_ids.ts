@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as fs from "fs";
-import {ID, KanjiIndex, Lemma, LemmaIdIndex, LemmaKanjiPair, Rank} from "../types";
+import {ID, KanjiIndex, Lemma, IdLemmaIndex, LemmaKanjiPair, Rank} from "../types";
 
 const rankedContent: Array<[string, number]> = fs.readFileSync(path.resolve(__dirname, "ranked.csv"), {encoding: "utf-8"})
     .split("\n")
@@ -16,7 +16,7 @@ const rankedMap: Map<Lemma, Rank> = new Map(rankedContent);
 
 const LemmaIdMap: Map<Lemma, ID> = new Map();
 
-const IdLemmaMap: LemmaIdIndex = new Map();
+const IdLemmaMap: IdLemmaIndex = new Map();
 
 let id = 0;
 
